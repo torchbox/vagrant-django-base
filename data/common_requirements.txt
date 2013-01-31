@@ -4,3 +4,4 @@ psycopg2==2.4.5
 django-devserver==0.3.2
 django-compressor==1.1.2
 django-debug-toolbar==0.9.4
+Pillow==1.7.8
