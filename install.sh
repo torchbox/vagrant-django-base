@@ -27,7 +27,14 @@ cp /vagrant_data/pg_hba.conf /etc/postgresql/$PGSQL_VERSION/main/
 /etc/init.d/postgresql reload
 
 # virtualenv global setup
+easy_install -U pip
 easy_install virtualenv virtualenvwrapper stevedore virtualenv-clone
 
 # bash environment global setup
 cp -p /vagrant_data/bashrc /home/vagrant/.bashrc
+
+# install our common Python packages in a temporary virtual env so that they'll get cached
+su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache && \
+    virtualenv /home/vagrant/yayforcaching && \
+    PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache /home/vagrant/yayforcaching/bin/pip install -r /vagrant_data/common_requirements.txt && \
+    rm -rf /home/vagrant/.virtualenvs/yayforcaching"
