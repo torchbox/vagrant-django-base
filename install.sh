@@ -40,3 +40,19 @@ su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache && \
     virtualenv /home/vagrant/yayforcaching && \
     PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache /home/vagrant/yayforcaching/bin/pip install -r /vagrant_data/common_requirements.txt && \
     rm -rf /home/vagrant/yayforcaching"
+
+# Node.js, CoffeeScript and LESS
+if ! command -v npm; then
+    wget http://nodejs.org/dist/v0.10.0/node-v0.10.0.tar.gz
+    tar xzf node-v0.10.0.tar.gz
+    cd node-v0.10.0/
+    ./configure && make && make install
+    cd ..
+    rm -rf node-v0.10.0/ node-v0.10.0.tar.gz
+fi
+if ! command -v coffee; then
+    npm install -g coffee-script
+fi
+if ! command -v lessc; then
+    npm install -g less
+fi

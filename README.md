@@ -10,6 +10,7 @@ precise32 box include:
 * dependencies for PIL, the Python Imaging Library
 * a pip download cache pre-seeded with Django and various other common packages
 * git (sometimes required for pip dependencies that aren't in PyPI)
+* Node.js, CoffeeScript and LESS
 
 We use this box in conjunction with https://github.com/torchbox/vagrant-django-template
 as the initial template for our Django projects. vagrant-django-template will
