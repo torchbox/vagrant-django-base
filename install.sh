@@ -17,29 +17,36 @@ export LC_ALL=en_GB.UTF-8
 apt-get update -y
 # Python dev packages
 apt-get install -y build-essential python python-dev python-setuptools python-pip
-# Postgresql
-apt-get install -y postgresql-$PGSQL_VERSION libpq-dev
 # Dependencies for image processing with PIL
 apt-get install -y libjpeg62-dev zlib1g-dev libfreetype6-dev liblcms1-dev
 # Git (we'd rather avoid people keeping credentials for git commits in the repo, but sometimes we need it for pip requirements that aren't in PyPI)
 apt-get install -y git
 
-# postgresql global setup
-cp /vagrant_data/pg_hba.conf /etc/postgresql/$PGSQL_VERSION/main/
-/etc/init.d/postgresql reload
+# Postgresql
+if ! command -v psql; then
+    apt-get install -y postgresql-$PGSQL_VERSION libpq-dev
+    cp /vagrant_data/pg_hba.conf /etc/postgresql/$PGSQL_VERSION/main/
+    /etc/init.d/postgresql reload
+fi
 
 # virtualenv global setup
-easy_install -U pip
-easy_install virtualenv virtualenvwrapper stevedore virtualenv-clone
+if ! command -v pip; then
+    easy_install -U pip
+fi
+if ! command -v virtualenv; then
+    easy_install virtualenv virtualenvwrapper stevedore virtualenv-clone
+fi
 
 # bash environment global setup
 cp -p /vagrant_data/bashrc /home/vagrant/.bashrc
 
 # install our common Python packages in a temporary virtual env so that they'll get cached
-su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache && \
-    virtualenv /home/vagrant/yayforcaching && \
-    PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache /home/vagrant/yayforcaching/bin/pip install -r /vagrant_data/common_requirements.txt && \
-    rm -rf /home/vagrant/yayforcaching"
+if [[ ! -e /home/vagrant/.pip_download_cache ]]; then
+    su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache && \
+        virtualenv /home/vagrant/yayforcaching && \
+        PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache /home/vagrant/yayforcaching/bin/pip install -r /vagrant_data/common_requirements.txt && \
+        rm -rf /home/vagrant/yayforcaching"
+fi
 
 # Node.js, CoffeeScript and LESS
 if ! command -v npm; then
