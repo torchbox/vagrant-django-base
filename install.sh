@@ -21,6 +21,8 @@ apt-get install -y build-essential python python-dev python-setuptools python-pi
 apt-get install -y postgresql-$PGSQL_VERSION libpq-dev
 # Dependencies for image processing with PIL
 apt-get install -y libjpeg62-dev zlib1g-dev libfreetype6-dev liblcms1-dev
+# Git (we'd rather avoid people keeping credentials for git commits in the repo, but sometimes we need it for pip requirements that aren't in PyPI)
+apt-get install -y git
 
 # postgresql global setup
 cp /vagrant_data/pg_hba.conf /etc/postgresql/$PGSQL_VERSION/main/
