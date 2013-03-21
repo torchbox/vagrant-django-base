@@ -33,7 +33,7 @@ fi
 if ! command -v pip; then
     easy_install -U pip
 fi
-if ! command -v virtualenv; then
+if [[ ! -f /usr/local/bin/virtualenv ]]; then
     easy_install virtualenv virtualenvwrapper stevedore virtualenv-clone
 fi
 
