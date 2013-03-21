@@ -37,4 +37,4 @@ cp -p /vagrant_data/bashrc /home/vagrant/.bashrc
 su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache && \
     virtualenv /home/vagrant/yayforcaching && \
     PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache /home/vagrant/yayforcaching/bin/pip install -r /vagrant_data/common_requirements.txt && \
-    rm -rf /home/vagrant/.virtualenvs/yayforcaching"
+    rm -rf /home/vagrant/yayforcaching"
