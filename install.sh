@@ -2,7 +2,7 @@
 
 # Script to set up dependencies for Django on Vagrant.
 
-PGSQL_VERSION=9.1
+PGSQL_VERSION=9.3
 
 # Need to fix locale so that Postgres creates databases in UTF-8
 cp -p /vagrant_data/etc-bash.bashrc /etc/bash.bashrc
@@ -17,7 +17,8 @@ export LC_ALL=en_GB.UTF-8
 apt-get update -y
 # Python dev packages
 apt-get install -y build-essential python python-dev python-setuptools python-pip
-# Dependencies for image processing with PIL
+# Dependencies for image processing with Pillow (drop-in replacement for PIL)
+# supporting: jpeg, tiff, png, freetype, littlecms
 apt-get install -y libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev liblcms2-dev
 # Git (we'd rather avoid people keeping credentials for git commits in the repo, but sometimes we need it for pip requirements that aren't in PyPI)
 apt-get install -y git
@@ -63,3 +64,10 @@ fi
 if ! command -v lessc; then
     npm install -g less
 fi
+
+# Cleanup
+apt-get clean
+
+echo "Zeroing free space to improve compression."
+dd if=/dev/zero of=/EMPTY bs=1M
+rm -f /EMPTY
