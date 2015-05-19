@@ -1,28 +1,39 @@
-vagrant-django-base
-===================
+Vagrant box for Django development
+==================================
 
-A Vagrant box based on Ubuntu trusty32, configured for Django development
-according to Torchbox's adopted practices. Things preinstalled beyond the base
-trusty32 box include:
+A Vagrant box based on Ubuntu trusty32, with the dependencies for developing Django projects preinstalled.
 
-* postgresql 9.3 (with locale fixed to create databases as UTF-8)
-* virtualenv and virtualenvwrapper
-* dependencies for Pillow, a drop-in replacement for the Python Imaging Library PIL
-* a pip download cache pre-seeded with Django and various other common packages
-* git (sometimes required for pip dependencies that aren't in PyPI)
-* Node.js, CoffeeScript and LESS
+Usage
+-----
 
-We use this box in conjunction with https://github.com/torchbox/vagrant-django-template
-as the initial template for our Django projects. vagrant-django-template will
-successfully build from a vanilla trusty32 base box, but using vagrant-django-base
-instead will skip some of the time-consuming initial setup.
+This box is available on Vagrant cloud (aka Atlas) so can be used by just setting your base box to ``torchbox/django``.
+
+To create a new Vagrantfile that uses this box, run the following:
+
+```
+vagrant init torchbox/django
+```
+
+What's inside
+-------------
+
+ - Python 2.7.9 with virtualenv and pip
+ - Python 3.4.3 with pip (use bundled pyvenv for virtual environments)
+ - NodeJS 0.12.3 with npm 2.9.1
+ - PostgreSQL 9.3.6
+ - Redis 2.8.4
+ - Vim, Git, GCC (with C++ support)
+ - Development headers for Python (2 and 3), PostgreSQL and some image libraries (libjpeg, zlib, etc)
+ - Prebuilt wheels for Pillow 2.8.1 and psycopg2 2.6 for both python versions (and pip configured to use them)
+
 
 Build instructions
 ------------------
+
 To generate the .box file:
 
     ./build.sh
 
 To install locally:
 
-    vagrant box add django-base-v2.2 django-base-v2.2.box
+    vagrant box add django-base-v3.0.0 django-base-v3.0.0.box
